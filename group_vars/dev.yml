@@ -1,0 +1,8 @@
+# group_vars/dev.yml
+app_name: "myapp"        # Name of the application
+app_version: "1.0.0"     # Version of the application
+deploy_path: "C:\\apps\\myapp\\"  # Path to deploy the application on Windows
+db_host: "localhost"     # Database host (could be different in production)
+db_name: "devdb"         # Database name
+db_user: "devuser"       # Database user for development environment
+db_password: "devpassword"  # Password for the database user

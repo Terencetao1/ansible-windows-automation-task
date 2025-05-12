@@ -1,0 +1,8 @@
+# group_vars/test.yml
+app_name: "myapp"
+app_version: "1.1.0"
+deploy_path: "C:\\apps\\myapp\\"
+db_host: "test-db-host"     # Different DB host for testing environment
+db_name: "testdb"           # Different DB name for testing environment
+db_user: "testuser"         # Database user for testing environment
+db_password: "testpassword"  # Password for the test database user

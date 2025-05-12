@@ -1,0 +1,8 @@
+# group_vars/prod.yml
+app_name: "myapp"
+app_version: "1.2.0"
+deploy_path: "C:\\apps\\myapp\\"
+db_host: "prod-db-host"     # Production DB host
+db_name: "proddb"           # Production DB name
+db_user: "produser"         # Database user for production environment
+db_password: "prodpassword"  # Password for the production database user
