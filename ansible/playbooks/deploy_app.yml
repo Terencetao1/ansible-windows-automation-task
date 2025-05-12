@@ -1,0 +1,17 @@
+---
+- name: Deploy MyApp to different environments
+  hosts: all  # Apply to all hosts listed in the inventory file
+  gather_facts: no  # Skip gathering facts if you don't need them
+  tasks:
+    - name: Copy app files to the destination
+      win_copy:
+        src: ./myapp/   # Local path where your app files are located
+        dest: "{{ deploy_path }}"  # Use variable from group_vars (dev.yml, test.yml, prod.yml)
+    
+    - name: Install the application
+      win_command: "{{ deploy_path }}\\install.exe"  # Use deploy path variable from group_vars
+
+    - name: Start the application service
+      ansible.windows.win_service:
+        name: "{{ app_name }}"  # Use app_name variable from group_vars
+        state: started  # Ensure the service is started

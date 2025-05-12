@@ -1,0 +1,40 @@
+- name: Manage Windows Services
+  hosts: windows
+  gather_facts: no
+  tasks:
+    - name: Start Windows Time Service
+      ansible.windows.win_service:
+        name: w32time
+        start_mode: auto
+        state: started
+
+    - name: Start SQL Server with instance name
+      ansible.windows.win_service:
+        name: MSSQL$SQLEXPRESS
+        start_mode: auto
+        state: started
+
+    - name: Check the status of MyService
+      ansible.windows.win_service:
+        name: w32time
+        state: started  # This ensures the service is started
+
+    - name: Stop the MyService
+      ansible.windows.win_service:
+        name: w32time
+        state: stopped  # This will stop the service if it is running
+
+    - name: Restart the MyService
+      ansible.windows.win_service:
+        name: w32time
+        state: restarted  # This will restart the service
+
+    # Task to copy the installer to the Windows machine
+    - name: Copy the installer to the Windows machine
+      win_copy:
+        src: /path/to/local/myapp_installer.exe  # Local path on your control machine
+        dest: C:\installers\myapp_installer.exe  # Target path on the remote Windows machine
+
+    # Task to install the application using the installer
+    - name: Install the application using the installer
+      win_command: C:\installers\myapp_installer.exe  # This runs the installer

@@ -1,0 +1,16 @@
+---
+- name: Deploy VM
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Create a new VM from template
+      community.vmware.vmware_guest:
+        hostname: vcenter.local
+        username: administrator@vsphere.local
+        password: your_password
+        validate_certs: no
+        datacenter: DC
+        folder: /VMs
+        name: test-vm
+        template: base-template
+        state: poweredon

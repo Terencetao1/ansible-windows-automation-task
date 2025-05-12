@@ -1,0 +1,15 @@
+---
+- name: Collect performance data from Windows
+  hosts: windows
+  gather_facts: no
+  tasks:
+    - name: Collect CPU usage
+      win_shell: |
+        $cpu_data = Get-Counter '\Processor(_Total)\% Processor Time' 
+        $cpu_data.CounterSamples | Select-Object -Property Path, CookedValue |
+        Format-Table -AutoSize
+      register: cpu_performance
+
+    - name: Display collected CPU data
+      debug:
+        var: cpu_performance.stdout_lines

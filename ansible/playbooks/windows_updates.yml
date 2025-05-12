@@ -1,0 +1,30 @@
+---
+- name: Manage Windows Updates
+  hosts: windows
+  gather_facts: yes  # Optional: collect facts if needed for other tasks
+  tasks:
+    - name: Install Windows updates
+      win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+        reboot: yes  # Automatically reboot the system if needed
+      register: update_result  # Register the result of the update task
+
+    - name: Print update result
+      debug:
+        msg: "The update task was successful: {{ update_result }}"
+      
+    - name: Retry if updates fail
+      win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+        reboot: yes
+      when: update_result.failed  # Retry if the first attempt failed
+      register: retry_result
+
+    - name: Print retry result
+      debug:
+        msg: "The retry attempt result: {{ retry_result }}"
+      when: retry_result is defined  # Print the result only if the retry was attempted
