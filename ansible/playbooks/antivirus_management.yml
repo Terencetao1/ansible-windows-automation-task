@@ -1,0 +1,16 @@
+---
+- name: Antivirus Management - Windows Defender
+  hosts: windows
+  gather_facts: no
+  tasks:
+
+    - name: Check Windows Defender status
+      win_shell: Get-MpComputerStatus | ConvertTo-Json -Depth 3
+      register: defender_status
+
+    - name: Show Defender status
+      debug:
+        var: defender_status.stdout
+
+    - name: Run Windows Defender Quick Scan
+      win_shell: Start-MpScan -Scan_

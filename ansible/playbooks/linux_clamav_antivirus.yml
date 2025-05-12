@@ -1,0 +1,22 @@
+---
+- name: Antivirus Management - Linux ClamAV
+  hosts: linux
+  become: yes
+  gather_facts: yes
+  tasks:
+
+    - name: Install ClamAV
+      ansible.builtin.package:
+        name: clamav
+        state: present
+
+    - name: Update ClamAV virus database
+      ansible.builtin.command: freshclam
+
+    - name: Run antivirus scan on /home
+      ansible.builtin.command: clamscan -r /home
+      register: clamav_scan
+
+    - name: Show scan results
+      debug:
+        var: clamav_scan.stdout
